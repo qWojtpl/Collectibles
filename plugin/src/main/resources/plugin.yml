@@ -1,0 +1,6 @@
+name: Collectibles
+version: '${project.version}'
+main: pl.collectibles.Collectibles
+api-version: 1.19
+authors: [Assasin98980]
+description: Add collectibles to your Minecraft server.

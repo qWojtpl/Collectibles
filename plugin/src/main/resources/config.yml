@@ -1,0 +1,11 @@
+collections:
+  christmas:
+    name: "&2&lChrist&4&lmas &f&lCollection"
+    icon: SPRUCE_SAPLING
+    lore:
+      - "&aSearch for gifts on map to complete the christmas collection."
+    locations:
+      - "10 50 10 world"
+      - "20 10 10 world_nether"
+      - "50 100 50 world_the_end"
+    rewards: []
