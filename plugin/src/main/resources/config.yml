@@ -8,4 +8,14 @@ collections:
       - "10 50 10 world"
       - "20 10 10 world_nether"
       - "50 100 50 world_the_end"
-    rewards: []
+    rewards:
+      0:
+        material: DIAMOND
+        amount: 3
+        name: "&aSuper diamond!"
+      1:
+        material: EMERALD
+        amount: 10
+        name: "&aSuper emeralds!"
+        lore:
+          - "&aGained from christmas tree!"

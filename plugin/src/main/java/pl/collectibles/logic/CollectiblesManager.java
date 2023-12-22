@@ -3,10 +3,12 @@ package pl.collectibles.logic;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import pl.collectibles.Collectibles;
 import pl.collectibles.util.PlayerUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CollectiblesManager {
@@ -17,6 +19,10 @@ public class CollectiblesManager {
 
     public void addCollection(Collection collection) {
         collections.add(collection);
+    }
+
+    public List<Collection> getCollections() {
+        return new ArrayList<>(collections);
     }
 
     public void clearCollections() {
@@ -74,6 +80,24 @@ public class CollectiblesManager {
                 p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
                 if(getPlayerScore(player, c) >= getGoal(c)) {
                     p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1.0F, 1.0F);
+                    for(ItemStack is : c.getRewards()) {
+                        HashMap<Integer, ItemStack> rest = p.getInventory().addItem(is);
+                        if(is.getItemMeta() != null) {
+                            if(!is.getItemMeta().getDisplayName().isEmpty()) {
+                                p.sendMessage("§a+ §ex" + is.getAmount() + "§a " + is.getItemMeta().getDisplayName());
+                            } else {
+                                p.sendMessage("§a+ §ex" + is.getAmount() + "§a " + is.getType().name());
+                            }
+                        } else {
+                            p.sendMessage("§a+ §ex" + is.getAmount() + "§a " + is.getType().name());
+                        }
+                        for(int key : rest.keySet()) {
+                            if(p.getLocation().getWorld() == null) {
+                                continue;
+                            }
+                            p.getLocation().getWorld().dropItemNaturally(p.getLocation(), rest.get(key));
+                        }
+                    }
                 }
             }
         }
@@ -109,6 +133,11 @@ public class CollectiblesManager {
         PlayerProfile profile = getPlayerProfile(player);
         profile.setScore(collection, index, value);
         Collectibles.getInstance().getDataHandler().save(collection, player, index, value);
+    }
+
+    public void registerSaveTask() {
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> plugin.getDataHandler().saveData(),
+                0L, 20L * 60 * 5);
     }
 
 }

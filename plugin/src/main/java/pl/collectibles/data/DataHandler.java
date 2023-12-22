@@ -55,6 +55,7 @@ public class DataHandler {
             for(String locationString : locationList) {
                 collection.addLocation(LocationUtil.parseLocation(locationString));
             }
+            collection.setRewards(ItemLoader.getItemStackList(yml, path + "rewards"));
             collectiblesManager.addCollection(collection);
         }
     }

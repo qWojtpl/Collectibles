@@ -4,3 +4,8 @@ main: pl.collectibles.Collectibles
 api-version: 1.19
 authors: [Assasin98980]
 description: Add collectibles to your Minecraft server.
+commands:
+  collections:
+    description: See your collections
+    aliases:
+      - kolekcje
